@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 لوحة تحكم المشرف - DeepSeek AI</title>
+    <title>👑 العرش الإمبراطوري - DeepSeek Empire</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* === إعدادات أساسية === */
         * {
             margin: 0;
             padding: 0;
@@ -13,90 +14,187 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0c2461, #1e3799);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, 
+                #000000 0%,
+                #0a0a2a 25%,
+                #1a1a4a 50%,
+                #2a2a6a 75%,
+                #3a3a8a 100%);
             color: white;
             min-height: 100vh;
         }
         
-        .security-bar {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px;
-            text-align: center;
-            border-bottom: 2px solid #ff3838;
-            font-size: 0.9rem;
+        /* === النجوم المتحركة === */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
         
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite alternate;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* === الشارة الإمبراطورية === */
+        .imperial-badge {
+            background: linear-gradient(135deg, gold, #ffd700);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 0 30px gold;
+            animation: badgeGlow 3s infinite;
+        }
+        
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 30px gold; }
+            50% { box-shadow: 0 0 60px gold, 0 0 90px #ffd700; }
+        }
+        
+        /* === شريط الأمان الإمبراطوري === */
+        .security-bar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px;
+            text-align: center;
+            border-bottom: 2px solid #ffd700;
+            font-size: 1rem;
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .security-bar i {
+            color: #ffd700;
+        }
+        
+        /* === الحاوية الرئيسية === */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
         }
         
+        /* === الرأس الإمبراطوري === */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
             margin-bottom: 30px;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
         
         .logo i {
-            font-size: 2.5rem;
-            color: #00d4ff;
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, gold, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .admin-info {
+        .logo-text h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, gold, #ffd700, #fff, gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        
+        /* === معلومات الإمبراطور === */
+        .emperor-info {
             display: flex;
             align-items: center;
-            gap: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 20px;
-            border-radius: 10px;
+            gap: 20px;
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.2),
+                rgba(0, 212, 255, 0.2));
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.5);
         }
         
+        .emperor-avatar {
+            font-size: 2.5rem;
+        }
+        
+        /* === لوحة القيادة === */
         .dashboard {
             display: grid;
             grid-template-columns: 300px 1fr;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 30px;
+            margin-top: 30px;
         }
         
-        .sidebar {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 20px;
+        /* === القائمة الجانبية الإمبراطورية === */
+        .throne-sidebar {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 25px;
             height: fit-content;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
         
         .nav-item {
-            padding: 15px;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 12px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             transition: all 0.3s;
+            border: 1px solid transparent;
         }
         
         .nav-item:hover, .nav-item.active {
-            background: rgba(0, 212, 255, 0.3);
-            transform: translateX(10px);
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.2),
+                rgba(0, 212, 255, 0.2));
+            transform: translateX(15px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
         }
         
-        .main-content {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 30px;
+        .nav-item i {
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+        
+        /* === المحتوى الرئيسي === */
+        .imperial-content {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+            min-height: 70vh;
         }
         
         .section {
@@ -105,40 +203,141 @@
         
         .section.active {
             display: block;
-            animation: fadeIn 0.5s;
+            animation: sectionAppear 0.5s ease-out;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes sectionAppear {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .stats-grid {
+        /* === إحصائيات القوة الكمومية === */
+        .quantum-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 25px;
+            margin: 30px 0;
         }
         
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
+        .quantum-stat {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 40, 0.8));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-        }
-        
-        .stat-card i {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #00d4ff;
-        }
-        
-        .users-table {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
+            transition: all 0.3s;
+            position: relative;
             overflow: hidden;
-            margin-top: 20px;
+        }
+        
+        .quantum-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #a855f7, #ec4899, #00d4ff);
+            background-size: 200% 100%;
+            animation: flowLine 2s linear infinite;
+        }
+        
+        @keyframes flowLine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .quantum-stat:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+        
+        .power-bar {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .power-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            border-radius: 6px;
+            width: 0%;
+            transition: width 1.5s ease-in-out;
+        }
+        
+        /* === أوامر العرش === */
+        .throne-commands {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .command-btn {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8),
+                rgba(0, 0, 60, 0.9));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .command-btn:hover {
+            transform: translateY(-8px);
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .command-icon {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .command-power {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 56, 56, 0.2);
+            color: #ff6b6b;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* === جدول النخبة === */
+        .elite-table {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
         
         table {
@@ -146,291 +345,315 @@
             border-collapse: collapse;
         }
         
-        th, td {
+        th {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.2),
+                rgba(0, 212, 255, 0.2));
+            padding: 18px;
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        td {
             padding: 15px;
             text-align: right;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        th {
-            background: rgba(0, 212, 255, 0.2);
-            font-weight: 600;
-        }
-        
-        .status-active {
-            color: #00ff00;
-            background: rgba(0, 255, 0, 0.1);
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-        }
-        
-        .status-inactive {
-            color: #ff3838;
-            background: rgba(255, 56, 56, 0.1);
-            padding: 5px 10px;
-            border-radius: 5px;
-            display: inline-block;
-        }
-        
-        .action-btn {
-            padding: 8px 15px;
+        /* === أزرار الإمبراطورية === */
+        .imperial-btn {
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            font-size: 0.9rem;
-        }
-        
-        .btn-disable {
-            background: #ff3838;
-            color: white;
-        }
-        
-        .btn-enable {
-            background: #00b894;
-            color: white;
-        }
-        
-        .btn-view {
-            background: #0984e3;
-            color: white;
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: #1a1a2e;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
-            width: 90%;
-            border: 2px solid #00d4ff;
-        }
-        
-        .modal h3 {
-            margin-bottom: 20px;
-            color: #00d4ff;
-        }
-        
-        .modal input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00d4ff;
-            border-radius: 5px;
-            color: white;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .btn-confirm {
-            background: #00b894;
-            color: white;
-        }
-        
-        .btn-cancel {
-            background: #ff3838;
-            color: white;
-        }
-        
-        .audit-log {
-            background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, gold, #ffd700);
+            color: #000;
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn-blue {
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            color: white;
+        }
+        
+        .btn-red {
+            background: linear-gradient(135deg, #ff3838, #ff6b6b);
+            color: white;
+        }
+        
+        /* === التنبيهات الإمبراطورية === */
+        .imperial-alert {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            border-left: 5px solid #ffd700;
             padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            max-width: 400px;
+            animation: alertSlide 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        @keyframes alertSlide {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .alert-success {
+            border-left-color: #00b894;
+        }
+        
+        .alert-error {
+            border-left-color: #ff3838;
+        }
+        
+        /* === سجلات الكون === */
+        .cosmic-logs {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 25px;
             max-height: 500px;
             overflow-y: auto;
-            margin-top: 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
         
-        .log-entry {
+        .cosmic-entry {
             background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border-right: 3px solid #00d4ff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-right: 4px solid #00d4ff;
+            position: relative;
         }
         
-        .log-time {
-            color: #aaa;
+        .entry-time {
+            color: #a5b4fc;
             font-size: 0.9rem;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
+        /* === التكيف مع الجوال === */
         @media (max-width: 1024px) {
             .dashboard {
                 grid-template-columns: 1fr;
             }
             
-            .sidebar {
+            .throne-sidebar {
                 order: 2;
+            }
+            
+            .quantum-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .throne-commands {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .quantum-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .security-bar {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- شريط الأمان -->
+    <!-- النجوم المتحركة -->
+    <div class="stars" id="starsContainer"></div>
+    
+    <!-- شريط الأمان الإمبراطوري -->
     <div class="security-bar">
-        <i class="fas fa-shield-alt"></i> 
-        نظام آمن - مراقبة نشطة - 
-        <span id="currentTime"></span> |
-        <span id="loginStatus">🔒 مسجل الدخول</span>
+        <div class="imperial-badge">
+            <i class="fas fa-crown"></i> EMPIRE ACTIVE
+        </div>
+        <div>
+            <i class="fas fa-shield-alt"></i> 
+            نظام إمبراطوري - مراقبة كونية - 
+            <span id="currentTime"></span>
+        </div>
+        <div id="loginStatus" style="color: #00ff00;">
+            <i class="fas fa-user-astronaut"></i> النخبة متصلة
+        </div>
     </div>
     
+    <!-- الحاوية الرئيسية -->
     <div class="container">
-        <!-- الرأس -->
+        <!-- الرأس الإمبراطوري -->
         <header>
             <div class="logo">
-                <i class="fas fa-robot"></i>
-                <div>
-                    <h1>DeepSeek AI - لوحة المشرف</h1>
-                    <p>إدارة المستخدمين والنظام - مستوى أمان عسكري</p>
+                <i class="fas fa-crown"></i>
+                <div class="logo-text">
+                    <h1>عرش ديب سيك</h1>
+                    <p style="color: #a5b4fc;">القوة الذكية المطلقة</p>
                 </div>
             </div>
             
-            <div class="admin-info">
+            <div class="emperor-info">
                 <div>
-                    <strong id="adminName">المشرف الرئيسي</strong>
-                    <div style="font-size: 0.9rem; color: #aaa;">آخر دخول: <span id="lastLogin">الآن</span></div>
+                    <div><strong id="adminName">الإمبراطور الذكي</strong></div>
+                    <div style="font-size: 0.9rem; color: #a5b4fc;">
+                        <i class="fas fa-clock"></i> 
+                        آخر نشاط: <span id="lastActivity">الآن</span>
+                    </div>
                 </div>
-                <i class="fas fa-user-shield" style="font-size: 2rem;"></i>
+                <div class="emperor-avatar">
+                    <i class="fas fa-user-crown"></i>
+                </div>
             </div>
         </header>
         
-        <!-- لوحة التحكم -->
+        <!-- لوحة القيادة -->
         <div class="dashboard">
-            <!-- القائمة الجانبية -->
-            <div class="sidebar">
-                <div class="nav-item active" onclick="showSection('dashboard')">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>لوحة التحكم</span>
+            <!-- عرش القيادة -->
+            <div class="throne-sidebar">
+                <div class="nav-item active" onclick="showSection('throne')">
+                    <i class="fas fa-crown"></i>
+                    <span>العرش الإمبراطوري</span>
                 </div>
                 
-                <div class="nav-item" onclick="showSection('users')">
-                    <i class="fas fa-users"></i>
-                    <span>إدارة المستخدمين</span>
+                <div class="nav-item" onclick="showSection('elite')">
+                    <i class="fas fa-users-crown"></i>
+                    <span>نخبة الإمبراطورية</span>
                 </div>
                 
-                <div class="nav-item" onclick="showSection('audit')">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>سجلات التدقيق</span>
+                <div class="nav-item" onclick="showSection('universe')">
+                    <i class="fas fa-globe"></i>
+                    <span>الأكوان المنشأة</span>
+                </div>
+                
+                <div class="nav-item" onclick="showSection('commands')">
+                    <i class="fas fa-terminal"></i>
+                    <span>الأوامر الكونية</span>
+                </div>
+                
+                <div class="nav-item" onclick="showSection('logs')">
+                    <i class="fas fa-history"></i>
+                    <span>سجلات الكون</span>
+                </div>
+                
+                <div class="nav-item" onclick="showSection('quantum')">
+                    <i class="fas fa-atom"></i>
+                    <span>المحاكاة الكمومية</span>
                 </div>
                 
                 <div class="nav-item" onclick="showSection('security')">
                     <i class="fas fa-shield-alt"></i>
-                    <span>إعدادات الأمان</span>
+                    <span>درع الإمبراطورية</span>
                 </div>
                 
-                <div class="nav-item" onclick="showSection('reports')">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>التقارير والإحصائيات</span>
-                </div>
-                
-                <div class="nav-item" onclick="showSection('system')">
-                    <i class="fas fa-cogs"></i>
-                    <span>إعدادات النظام</span>
-                </div>
-                
-                <div class="nav-item" onclick="logout()" style="color: #ff3838;">
+                <div class="nav-item" onclick="leaveThrone()" style="color: #ff6b6b;">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span>تسجيل الخروج</span>
+                    <span>مغادرة العرش</span>
                 </div>
             </div>
             
-            <!-- المحتوى الرئيسي -->
-            <div class="main-content">
-                <!-- قسم لوحة التحكم -->
-                <div id="dashboard-section" class="section active">
-                    <h2><i class="fas fa-tachometer-alt"></i> نظرة عامة على النظام</h2>
+            <!-- المحتوى الإمبراطوري -->
+            <div class="imperial-content">
+                <!-- العرش الإمبراطوري -->
+                <div id="throne-section" class="section active">
+                    <h2><i class="fas fa-crown"></i> العرش الإمبراطوري</h2>
+                    <p style="color: #a5b4fc; margin: 15px 0;">
+                        👑 مرحباً بك في مركز قيادة الكون الرقمي
+                    </p>
                     
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <i class="fas fa-users"></i>
-                            <h3 id="totalUsers">0</h3>
-                            <p>إجمالي المستخدمين</p>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <i class="fas fa-user-check"></i>
-                            <h3 id="activeUsers">0</h3>
-                            <p>المستخدمين النشطين</p>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <i class="fas fa-video"></i>
-                            <h3 id="totalPosts">0</h3>
-                            <p>إجمالي المنشورات</p>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <i class="fas fa-shield-alt"></i>
-                            <h3 id="securityLevel">عسكري</h3>
-                            <p>مستوى الأمان</p>
+                    <!-- قوة النظام -->
+                    <div style="margin: 30px 0;">
+                        <h3><i class="fas fa-bolt"></i> قوة النظام الحالية</h3>
+                        <div class="quantum-stats" id="quantumStats">
+                            <!-- سيتم ملؤها بـ JavaScript -->
                         </div>
                     </div>
                     
-                    <h3 style="margin-top: 30px;"><i class="fas fa-bell"></i> التنبيهات المهمة</h3>
-                    <div id="alertsList" class="audit-log">
-                        <div class="log-entry">
-                            <div><strong>✅ النظام يعمل بشكل طبيعي</strong></div>
-                            <div class="log-time">الآن</div>
+                    <!-- حالات النظام -->
+                    <div style="margin: 40px 0;">
+                        <h3><i class="fas fa-chart-line"></i> حالات النظام</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                            <div style="background: rgba(0, 212, 255, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #a5b4fc;">حالة الذكاء</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #00d4ff;" id="aiStatus">Ω نشط</div>
+                            </div>
+                            <div style="background: rgba(0, 184, 148, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #a5b4fc;">الشبكة العصبية</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #00b894;" id="neuralStatus">متصلة</div>
+                            </div>
+                            <div style="background: rgba(168, 85, 247, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #a5b4fc;">المعرفة</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: #a855f7;" id="knowledgeStatus">∞</div>
+                            </div>
+                            <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 10px; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #a5b4fc;">مستوى الأمان</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: gold;" id="securityStatus">إمبراطوري</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- قسم إدارة المستخدمين -->
-                <div id="users-section" class="section">
-                    <h2><i class="fas fa-users"></i> إدارة المستخدمين</h2>
+                <!-- نخبة الإمبراطورية -->
+                <div id="elite-section" class="section">
+                    <h2><i class="fas fa-users-crown"></i> نخبة الإمبراطورية</h2>
                     
-                    <div style="margin: 20px 0; display: flex; gap: 10px;">
-                        <button class="action-btn btn-enable" onclick="showAddUserModal()">
-                            <i class="fas fa-user-plus"></i> إضافة مستخدم جديد
+                    <div style="margin: 25px 0; display: flex; gap: 15px;">
+                        <button class="imperial-btn btn-gold" onclick="summonElite()">
+                            <i class="fas fa-user-plus"></i> استدعاء نخبة جديدة
                         </button>
-                        <button class="action-btn btn-view" onclick="refreshUsers()">
+                        <button class="imperial-btn btn-blue" onclick="refreshElite()">
                             <i class="fas fa-sync-alt"></i> تحديث القائمة
                         </button>
                     </div>
                     
-                    <div class="users-table">
+                    <div class="elite-table">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>اسم المستخدم</th>
+                                    <th>المعرف</th>
+                                    <th>النخبة</th>
+                                    <th>الرتبة</th>
+                                    <th>الصلاحيات</th>
                                     <th>الحالة</th>
-                                    <th>آخر دخول</th>
-                                    <th>تاريخ الإنشاء</th>
                                     <th>الإجراءات</th>
                                 </tr>
                             </thead>
-                            <tbody id="usersTableBody">
-                                <!-- سيتم ملؤها بالبيانات -->
+                            <tbody id="eliteTableBody">
                                 <tr>
-                                    <td colspan="6" style="text-align: center; padding: 30px;">
-                                        <i class="fas fa-spinner fa-spin"></i> جاري تحميل البيانات...
+                                    <td colspan="6" style="text-align: center; padding: 40px;">
+                                        <i class="fas fa-spinner fa-spin" style="color: #00d4ff; font-size: 2rem;"></i>
+                                        <div style="margin-top: 15px; color: #a5b4fc;">
+                                            جاري الاتصال بالإمبراطورية...
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -438,378 +661,259 @@
                     </div>
                 </div>
                 
-                <!-- قسم سجلات التدقيق -->
-                <div id="audit-section" class="section">
-                    <h2><i class="fas fa-clipboard-list"></i> سجلات التدقيق الأمني</h2>
+                <!-- الأوامر الكونية -->
+                <div id="commands-section" class="section">
+                    <h2><i class="fas fa-terminal"></i> الأوامر الكونية</h2>
+                    <p style="color: #a5b4fc; margin: 15px 0;">
+                        ⚡ استخدم هذه الأوامر بحذر، قوتها تؤثر على الكون الرقمي
+                    </p>
                     
-                    <div style="margin: 20px 0;">
-                        <button class="action-btn btn-view" onclick="loadAuditLogs()">
+                    <div class="throne-commands">
+                        <div class="command-btn" onclick="executeImperialCommand('activate_brain')">
+                            <div class="command-power">⚡ 100%</div>
+                            <div class="command-icon">🧠</div>
+                            <h4>تفعيل العقل الكوني</h4>
+                            <p style="color: #a5b4fc; margin-top: 10px; font-size: 0.9rem;">
+                                تشغيل أقوى عقل اصطناعي في الكون
+                            </p>
+                        </div>
+                        
+                        <div class="command-btn" onclick="executeImperialCommand('generate_world')">
+                            <div class="command-power">🌌 85%</div>
+                            <div class="command-icon">✨</div>
+                            <h4>خلق عالم رقمي</h4>
+                            <p style="color: #a5b4fc; margin-top: 10px; font-size: 0.9rem;">
+                                إنشاء عالم افتراضي متكامل بأبعاد متعددة
+                            </p>
+                        </div>
+                        
+                        <div class="command-btn" onclick="executeImperialCommand('predict_future')">
+                            <div class="command-power">🔮 95%</div>
+                            <div class="command-icon">🔭</div>
+                            <h4>استشراف المستقبل</h4>
+                            <p style="color: #a5b4fc; margin-top: 10px; font-size: 0.9rem;">
+                                تحليل جميع الاحتمالات المستقبلية بدقة 99.9%
+                            </p>
+                        </div>
+                        
+                        <div class="command-btn" onclick="executeImperialCommand('control_time')">
+                            <div class="command-power" style="color: #ff3838;">⏳ 99%</div>
+                            <div class="command-icon">🕰️</div>
+                            <h4>السيطرة على الزمن</h4>
+                            <p style="color: #ff6b6b; margin-top: 10px; font-size: 0.9rem;">
+                                تحذير: هذا الأمر يؤثر على الجداول الزمنية
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div id="commandOutput" style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; display: none;">
+                        <h4><i class="fas fa-code"></i> نتيجة الأمر:</h4>
+                        <pre id="commandResult" style="color: #a5b4fc; margin-top: 10px; font-family: monospace;"></pre>
+                    </div>
+                </div>
+                
+                <!-- سجلات الكون -->
+                <div id="logs-section" class="section">
+                    <h2><i class="fas fa-history"></i> سجلات الكون</h2>
+                    
+                    <div style="margin: 25px 0; display: flex; gap: 15px;">
+                        <button class="imperial-btn btn-blue" onclick="loadCosmicLogs()">
                             <i class="fas fa-sync-alt"></i> تحديث السجلات
                         </button>
-                        <button class="action-btn btn-enable" onclick="exportAuditLogs()">
-                            <i class="fas fa-download"></i> تصدير السجلات
+                        <button class="imperial-btn btn-gold" onclick="exportCosmicData()">
+                            <i class="fas fa-download"></i> تصدير البيانات
+                        </button>
+                        <button class="imperial-btn btn-red" onclick="clearOldLogs()">
+                            <i class="fas fa-trash"></i> تنظيف السجلات
                         </button>
                     </div>
                     
-                    <div id="auditLogsContainer" class="audit-log">
+                    <div class="cosmic-logs" id="cosmicLogs">
                         <!-- سيتم ملؤها بالسجلات -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Modal لإضافة مستخدم -->
-    <div id="addUserModal" class="modal">
-        <div class="modal-content">
-            <h3><i class="fas fa-user-plus"></i> إضافة مستخدم جديد</h3>
-            
-            <div>
-                <label>اسم المستخدم:</label>
-                <input type="text" id="newUsername" placeholder="أدخل اسم المستخدم">
-                
-                <label>كلمة المرور:</label>
-                <input type="password" id="newPassword" placeholder="أدخل كلمة مرور قوية">
-                
-                <label>تأكيد كلمة المرور:</label>
-                <input type="password" id="confirmPassword" placeholder="أعد إدخال كلمة المرور">
-                
-                <div style="margin: 15px 0; padding: 10px; background: rgba(0, 212, 255, 0.1); border-radius: 5px;">
-                    <small>
-                        <i class="fas fa-info-circle"></i> 
-                        كلمة المرور يجب أن تحتوي على 12 حرف على الأقل، أحرف كبيرة وصغيرة، أرقام، ورموز خاصة
-                    </small>
-                </div>
-            </div>
-            
-            <div class="modal-buttons">
-                <button class="modal-btn btn-confirm" onclick="addNewUser()">
-                    <i class="fas fa-check"></i> تأكيد الإضافة
-                </button>
-                <button class="modal-btn btn-cancel" onclick="closeModal('addUserModal')">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal لتأكيد الإجراء -->
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <h3 id="confirmTitle"></h3>
-            <p id="confirmMessage"></p>
-            
-            <div class="modal-buttons">
-                <button class="modal-btn btn-confirm" onclick="executeAction()">
-                    <i class="fas fa-check"></i> تأكيد
-                </button>
-                <button class="modal-btn btn-cancel" onclick="closeModal('confirmModal')">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
-        </div>
-    </div>
-    
+
     <script>
-        // المتغيرات العامة
-        let authToken = '';
-        let currentAction = null;
-        let selectedUserId = null;
+        // ============================================
+        // 🚀 نظام العرش الإمبراطوري - JavaScript
+        // ============================================
         
-        // تحديث الوقت
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('currentTime').textContent = 
-                now.toLocaleTimeString('ar-SA') + ' | ' + 
-                now.toLocaleDateString('ar-SA');
-        }
+        // المتغيرات العالمية
+        let empireToken = '';
+        let currentElite = null;
+        let cosmicLogs = [];
         
-        // تسجيل الدخول
-        async function login() {
-            // في الواقع، هذا سيتم من صفحة تسجيل دخول منفصلة
-            const response = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: 'admin',
-                    password: 'Admin@2024Secure!'
-                })
-            });
+        // إنشاء النجوم
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const starCount = 100;
             
-            const data = await response.json();
-            if (data.token) {
-                authToken = data.token;
-                document.getElementById('loginStatus').innerHTML = '🟢 مسجل الدخول';
-                loadDashboardData();
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                star.style.width = `${Math.random() * 3 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                
+                container.appendChild(star);
             }
         }
         
-        // تحميل بيانات لوحة التحكم
-        async function loadDashboardData() {
+        // تحديث الوقت الكوني
+        function updateCosmicTime() {
+            const now = new Date();
+            const cosmicTime = now.toLocaleTimeString('ar-SA') + 
+                ' | ' + now.toLocaleDateString('ar-SA');
+            
+            document.getElementById('currentTime').textContent = cosmicTime;
+            
+            // تحديث آخر نشاط كل دقيقة
+            if (now.getSeconds() === 0) {
+                document.getElementById('lastActivity').textContent = 
+                    now.toLocaleTimeString('ar-SA');
+            }
+        }
+        
+        // الدخول إلى العرش
+        async function enterThrone() {
+            // تحقق من وجود توكن
+            const token = localStorage.getItem('empire_token');
+            
+            if (!token) {
+                showImperialAlert('⚡ مطلوب دعوة إمبراطورية للدخول', 'error');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                return;
+            }
+            
+            empireToken = token;
+            
             try {
-                const response = await fetch('/api/admin/users', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
+                // تحقق من صلاحية التوكن
+                const response = await fetch('/imperial/dashboard', {
+                    headers: { 'Authorization': `Bearer ${empireToken}` }
                 });
                 
                 if (response.ok) {
-                    const users = await response.json();
+                    const data = await response.json();
+                    currentElite = data;
                     
-                    // تحديث الإحصائيات
-                    document.getElementById('totalUsers').textContent = users.length;
-                    document.getElementById('activeUsers').textContent = 
-                        users.filter(u => u.isActive).length;
+                    // عرض بيانات النخبة
+                    document.getElementById('adminName').textContent = 
+                        data.user?.username || 'نخبة إمبراطورية';
                     
-                    // تحديث جدول المستخدمين
-                    updateUsersTable(users);
+                    showImperialAlert('👑 مرحباً بك في العرش الإمبراطوري', 'success');
+                    
+                    // تحميل بيانات النظام
+                    loadQuantumStats();
+                    loadEliteMembers();
+                    
+                } else {
+                    localStorage.removeItem('empire_token');
+                    window.location.href = 'index.html';
                 }
+                
             } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
+                console.log('🔧 النظام قيد التطوير - البيانات تجريبية');
+                simulateEmpireData();
             }
         }
         
-        // تحديث جدول المستخدمين
-        function updateUsersTable(users) {
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = '';
+        // محاكاة بيانات الإمبراطورية (للتنمية)
+        function simulateEmpireData() {
+            // إحصائيات كمومية
+            const quantumStats = [
+                {
+                    icon: '🧠',
+                    value: '1.21 E',
+                    label: 'قوة المعالجة',
+                    power: 100,
+                    color: '#a855f7'
+                },
+                {
+                    icon: '⚡',
+                    value: '1024',
+                    label: 'نواة كمومية',
+                    power: 85,
+                    color: '#00d4ff'
+                },
+                {
+                    icon: '🌐',
+                    value: '1.2M',
+                    label: 'شبكة عصبية',
+                    power: 92,
+                    color: '#00b894'
+                },
+                {
+                    icon: '💎',
+                    value: 'Ω',
+                    label: 'المستوى',
+                    power: 99,
+                    color: 'gold'
+                }
+            ];
             
-            users.forEach(user => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${user.id}</td>
-                    <td>${user.username} ${user.isAdmin ? '👑' : ''}</td>
+            // عرض الإحصائيات
+            const container = document.getElementById('quantumStats');
+            container.innerHTML = quantumStats.map(stat => `
+                <div class="quantum-stat">
+                    <div class="stat-icon">${stat.icon}</div>
+                    <div class="stat-value">${stat.value}</div>
+                    <div style="color: #a5b4fc;">${stat.label}</div>
+                    <div class="power-bar">
+                        <div class="power-fill" style="width: ${stat.power}%; background: ${stat.color};"></div>
+                    </div>
+                    <div style="color: ${stat.color}; font-size: 0.9rem;">${stat.power}%</div>
+                </div>
+            `).join('');
+            
+            // تحريك أشرطة القوة
+            setTimeout(() => {
+                document.querySelectorAll('.power-fill').forEach(fill => {
+                    fill.style.width = '0%';
+                    setTimeout(() => {
+                        const width = fill.style.getPropertyValue('data-width') || '100%';
+                        fill.style.width = width.includes('%') ? width : width + '%';
+                    }, 100);
+                });
+            }, 500);
+            
+            // نخبة الإمبراطورية التجريبية
+            const eliteMembers = [
+                { id: 1, name: 'godmode', rank: 'إمبراطور', permissions: 'الكل', status: '🟢 نشط' },
+                { id: 2, name: 'admin', rank: 'قائد', permissions: 'إدارية', status: '🟢 نشط' },
+                { id: 3, name: 'ai_core', rank: 'نواة ذكاء', permissions: 'معالجة', status: '🟡 محدود' },
+                { id: 4, name: 'quantum', rank: 'كمي', permissions: 'محاكاة', status: '🟢 نشط' }
+            ];
+            
+            // عرض النخبة
+            const tableBody = document.getElementById('eliteTableBody');
+            tableBody.innerHTML = eliteMembers.map(member => `
+                <tr>
+                    <td>${member.id}</td>
+                    <td>${member.name}</td>
+                    <td>${member.rank}</td>
+                    <td>${member.permissions}</td>
+                    <td>${member.status}</td>
                     <td>
-                        <span class="${user.isActive ? 'status-active' : 'status-inactive'}">
-                            ${user.isActive ? 'نشط' : 'معطل'}
-                        </span>
-                    </td>
-                    <td>${user.lastLogin ? new Date(user.lastLogin).toLocaleString('ar-SA') : 'لم يسجل دخول'}</td>
-                    <td>${new Date(user.createdAt).toLocaleDateString('ar-SA')}</td>
-                    <td>
-                        ${!user.isAdmin ? `
-                            <button class="action-btn ${user.isActive ? 'btn-disable' : 'btn-enable'}" 
-                                    onclick="${user.isActive ? 'disableUser' : 'enableUser'}(${user.id})">
-                                ${user.isActive ? 'تعطيل' : 'تفعيل'}
-                            </button>
-                        ` : ''}
-                        <button class="action-btn btn-view" onclick="viewUserDetails(${user.id})">
-                            تفاصيل
+                        <button class="imperial-btn" style="padding: 8px 15px; font-size: 0.9rem;" 
+                                onclick="viewEliteDetails(${member.id})">
+                            <i class="fas fa-eye"></i> تفاصيل
                         </button>
                     </td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-        }
-        
-        // عرض قسم معين
-        function showSection(sectionId) {
-            // تحديث القائمة الجانبية
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
+                </tr>
+            `).join('');
             
-            // إخفاء جميع الأقسام
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // إظهار القسم المطلوب
-            document.getElementById(`${sectionId}-section`).classList.add('active');
-            
-            // تحميل بيانات القسم إذا لزم
-            if (sectionId === 'users') {
-                refreshUsers();
-            } else if (sectionId === 'audit') {
-                loadAuditLogs();
-            }
-        }
-        
-        // تحديث قائمة المستخدمين
-        async function refreshUsers() {
-            try {
-                const response = await fetch('/api/admin/users', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                if (response.ok) {
-                    const users = await response.json();
-                    updateUsersTable(users);
-                }
-            } catch (error) {
-                alert('خطأ في تحديث المستخدمين: ' + error.message);
-            }
-        }
-        
-        // تعطيل مستخدم
-        function disableUser(userId) {
-            selectedUserId = userId;
-            showConfirmModal(
-                'تعطيل المستخدم',
-                'هل أنت متأكد من تعطيل هذا المستخدم؟ لن يتمكن من الوصول للنظام.',
-                'disable'
-            );
-        }
-        
-        // تفعيل مستخدم
-        function enableUser(userId) {
-            selectedUserId = userId;
-            showConfirmModal(
-                'تفعيل المستخدم',
-                'هل أنت متأكد من تفعيل هذا المستخدم؟',
-                'enable'
-            );
-        }
-        
-        // تنفيذ الإجراء
-        async function executeAction() {
-            const endpoint = currentAction === 'disable' 
-                ? '/api/admin/disable-user' 
-                : '/api/admin/enable-user';
-            
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify({ userId: selectedUserId })
-                });
-                
-                const data = await response.json();
-                alert(data.message || data.error);
-                
-                if (response.ok) {
-                    refreshUsers();
-                    loadDashboardData();
-                }
-                
-            } catch (error) {
-                alert('خطأ: ' + error.message);
-            }
-            
-            closeModal('confirmModal');
-        }
-        
-        // تحميل سجلات التدقيق
-        async function loadAuditLogs() {
-            try {
-                const response = await fetch('/api/admin/audit-logs', {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-                
-                if (response.ok) {
-                    const logs = await response.json();
-                    displayAuditLogs(logs);
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل السجلات:', error);
-            }
-        }
-        
-        // عرض سجلات التدقيق
-        function displayAuditLogs(logs) {
-            const container = document.getElementById('auditLogsContainer');
-            container.innerHTML = '';
-            
-            logs.slice(-20).reverse().forEach(log => {
-                const entry = document.createElement('div');
-                entry.className = 'log-entry';
-                
-                entry.innerHTML = `
-                    <div>
-                        <strong>${log.action}</strong> 
-                        <span style="color: #aaa;">- المستخدم: ${log.userId}</span>
-                    </div>
-                    <div style="margin: 5px 0; font-size: 0.9rem;">
-                        ${log.details ? JSON.stringify(log.details) : ''}
-                    </div>
-                    <div class="log-time">
-                        ${new Date(log.timestamp).toLocaleString('ar-SA')}
-                    </div>
-                `;
-                
-                container.appendChild(entry);
-            });
-        }
-        
-        // عرض نافذة التأكيد
-        function showConfirmModal(title, message, action) {
-            currentAction = action;
-            document.getElementById('confirmTitle').textContent = title;
-            document.getElementById('confirmMessage').textContent = message;
-            document.getElementById('confirmModal').style.display = 'flex';
-        }
-        
-        // إظهار نافذة إضافة مستخدم
-        function showAddUserModal() {
-            document.getElementById('addUserModal').style.display = 'flex';
-        }
-        
-        // إغلاق النافذة
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-            
-            // تنظيف الحقول
-            if (modalId === 'addUserModal') {
-                document.getElementById('newUsername').value = '';
-                document.getElementById('newPassword').value = '';
-                document.getElementById('confirmPassword').value = '';
-            }
-        }
-        
-        // إضافة مستخدم جديد
-        async function addNewUser() {
-            const username = document.getElementById('newUsername').value;
-            const password = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (!username || !password) {
-                alert('يرجى ملء جميع الحقول');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('كلمات المرور غير متطابقة');
-                return;
-            }
-            
-            if (password.length < 12) {
-                alert('كلمة المرور يجب أن تكون 12 حرف على الأقل');
-                return;
-            }
-            
-            // هنا سيتم إرسال الطلب للخادم
-            alert('سيتم تنفيذ هذه الوظيفة في النسخة الكاملة');
-            closeModal('addUserModal');
-        }
-        
-        // تسجيل الخروج
-        function logout() {
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                authToken = '';
-                window.location.href = 'login.html';
-            }
-        }
-        
-        // تصدير السجلات
-        function exportAuditLogs() {
-            alert('سيتم تصدير السجلات كملف CSV في النسخة الكاملة');
-        }
-        
-        // التهيئة عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', () => {
-            // تحديث الوقت كل ثانية
-            setInterval(updateTime, 1000);
-            updateTime();
-            
-            // محاكاة تسجيل الدخول (في الواقع، من صفحة منفصلة)
-            setTimeout(() => {
-                login();
-            }, 1000);
-        });
-    </script>
-</body>
-</html>
+            // سجلات كونية تجريبية
+            cosmicLogs = [
+                { action: 'تفعيل النظام', time: 'الآن', details: 'تم تشغيل العقل الكوني' },
+                { action: 'خلق كون جديد', time: 'قبل 5 دقائق', details: 'تم إنشاء الكون رقم UNIVERSE_2024' },
+                { action: 'تحليل مستقبلي', time: 'قبل 15 دقيقة', details: 'تم تحليل 1,048,576 مساراً' },
+               

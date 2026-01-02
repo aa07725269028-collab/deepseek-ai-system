@@ -2,9 +2,194 @@
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>🚀 DeepSeek AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 DeepSeek AI - النظام المتكامل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .feature i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .status {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #00ff00;
+        }
+        
+        .api-link {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            margin: 20px 10px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+        
+        .api-link:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .logo { font-size: 3rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>مرحباً! النظام يعمل ✅</h1>
+    <div class="container">
+        <div class="logo">🤖</div>
+        <h1>🚀 DeepSeek AI System</h1>
+        <p class="tagline">نظام ذكاء اصطناعي متكامل - مجاني بالكامل</p>
+        
+        <div class="status">
+            <i class="fas fa-check-circle"></i>
+            ✅ النظام يعمل بنجاح على Netlify
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>أمان عالي</h3>
+                <p>تشفير متقدم وحماية كاملة</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-robot"></i>
+                <h3>ذكاء اصطناعي</h3>
+                <p>توليد محتوى ذكي تلقائي</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sync-alt"></i>
+                <h3>نشر تلقائي</h3>
+                <p>6 مقاطع يومياً على 5 منصات</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <h3>إدارة المستخدمين</h3>
+                <p>دعم حتى 100 مستخدم</p>
+            </div>
+        </div>
+        
+        <div>
+            <a href="/api/status" class="api-link">
+                <i class="fas fa-code"></i> اختبار API
+            </a>
+            <a href="https://github.com/yourusername/deepseek-ai-system" class="api-link" target="_blank">
+                <i class="fab fa-github"></i> الكود المصدري
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 DeepSeek AI - نظام مجاني مفتوح المصدر</p>
+            <p>🔗 https://deepseek-ai-system.netlify.app</p>
+            <p>📧 للدعم: support@deepseek.ai</p>
+        </div>
+    </div>
+    
+    <script>
+        // تحديث حي للحالة
+        async function checkAPI() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                console.log('✅ API Status:', data);
+            } catch (error) {
+                console.log('⚠️ API غير متصل - النظام يعمل في وضع HTML فقط');
+            }
+        }
+        
+        checkAPI();
+        
+        // تأثيرات تفاعلية
+        document.querySelectorAll('.feature').forEach(feature => {
+            feature.addEventListener('mouseenter', () => {
+                feature.style.transform = 'translateY(-10px)';
+                feature.style.transition = 'transform 0.3s';
+            });
+            
+            feature.addEventListener('mouseleave', () => {
+                feature.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>

@@ -855,6 +855,10 @@ async function startServer() {
         await initializeSystem();
         
         // تشغيل الخادم
+     app.use(express.static(__dirname));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'login.html'));
+});
         app.listen(PORT, () => {
             console.log(`
             ============================================

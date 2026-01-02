@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔐 تسجيل الدخول - DeepSeek AI</title>
+    <title>👑 بوابة العرش - DeepSeek Empire</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,483 +13,589 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0c2461, #1e3799);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, 
+                #000000 0%,
+                #0a0a2a 25%,
+                #1a1a4a 50%,
+                #2a2a6a 75%,
+                #3a3a8a 100%);
             color: white;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow-x: hidden;
         }
         
-        .security-warning {
+        /* النجوم المتحركة */
+        .stars {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(255, 56, 56, 0.2);
-            border-bottom: 2px solid #ff3838;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.9rem;
-            z-index: 1000;
-        }
-        
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-        }
-        
-        .login-card {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0,212,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: float 20s linear infinite;
+            height: 100%;
+            pointer-events: none;
             z-index: 0;
         }
         
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite alternate;
         }
         
-        .login-header {
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* الشارة الإمبراطورية */
+        .imperial-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, gold, #ffd700);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: #000;
+            z-index: 1000;
+            box-shadow: 0 0 30px gold;
+            animation: badgeGlow 3s infinite;
+        }
+        
+        @keyframes badgeGlow {
+            0%, 100% { box-shadow: 0 0 30px gold; }
+            50% { box-shadow: 0 0 60px gold, 0 0 90px #ffd700; }
+        }
+        
+        /* البوابة الكونية */
+        .cosmic-gate {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .gate-card {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 0 100px rgba(0, 212, 255, 0.3),
+                0 0 200px rgba(100, 100, 255, 0.1);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+        
+        .gate-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                #00d4ff, 
+                #0099ff, 
+                #a855f7, 
+                #ec4899, 
+                #00d4ff);
+            border-radius: 32px;
+            z-index: -1;
+            animation: borderGlow 4s linear infinite;
+            background-size: 400% 400%;
+        }
+        
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* التاج المتألق */
+        .crown-header {
             text-align: center;
             margin-bottom: 40px;
             position: relative;
-            z-index: 1;
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+        .crown {
+            font-size: 80px;
             margin-bottom: 20px;
+            display: inline-block;
+            animation: crownFloat 3s ease-in-out infinite;
+            text-shadow: 
+                0 0 20px gold,
+                0 0 40px #ffd700,
+                0 0 60px #fff;
         }
         
-        .logo i {
-            font-size: 3rem;
-            color: #00d4ff;
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
         
-        .logo-text h1 {
-            font-size: 2rem;
-            background: linear-gradient(45deg, #00d4ff, #0099ff);
+        .empire-title {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, gold, #ffd700, #fff, gold);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
         
-        .login-form {
+        .empire-subtitle {
+            color: #a5b4fc;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* مدخل النخبة */
+        .elite-entrance {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
-        .form-group {
+        .input-portal {
             margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        
-        .input-with-icon {
             position: relative;
         }
         
-        .input-with-icon i {
+        .portal-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #c7d2fe;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .portal-input {
+            width: 100%;
+            padding: 18px 20px 18px 60px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(100, 100, 255, 0.3);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .portal-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 
+                0 0 0 3px rgba(0, 212, 255, 0.1),
+                0 0 30px rgba(0, 212, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+        
+        .portal-icon {
             position: absolute;
-            left: 15px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
+            font-size: 1.2rem;
             color: #00d4ff;
         }
         
-        .input-with-icon input {
+        /* زر العرش */
+        .throne-button {
             width: 100%;
-            padding: 15px 15px 15px 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 10px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .input-with-icon input:focus {
-            outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
-            background: rgba(255, 255, 255, 0.15);
-        }
-        
-        .show-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
+            padding: 20px;
+            background: linear-gradient(135deg, 
+                gold 0%,
+                #ffd700 50%,
+                gold 100%);
+            color: #000;
             border: none;
-            color: #aaa;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #00d4ff, #0099ff);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 20px;
+            margin-top: 30px;
             position: relative;
             overflow: hidden;
+            letter-spacing: 1px;
         }
         
-        .login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        .throne-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 10px 40px rgba(255, 215, 0, 0.5),
+                0 0 60px rgba(255, 215, 0, 0.3);
         }
         
-        .login-btn:disabled {
-            opacity: 0.5;
+        .throne-button:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
         }
         
-        .security-features {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            border-left: 4px solid #00d4ff;
+        /* قوة النظام */
+        .system-power {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
         
-        .security-features h4 {
+        .power-title {
             color: #00d4ff;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .features-list {
+        .power-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .stat {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: gold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
             font-size: 0.9rem;
-            color: #aaa;
+            color: #a5b4fc;
         }
         
-        .features-list li {
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .loading {
+        /* الرسائل */
+        .imperial-message {
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
             display: none;
             text-align: center;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-error {
+            background: linear-gradient(135deg, 
+                rgba(255, 56, 56, 0.2), 
+                rgba(220, 38, 38, 0.3));
+            border: 1px solid #ff3838;
+            color: #ff6b6b;
+        }
+        
+        .message-success {
+            background: linear-gradient(135deg, 
+                rgba(0, 184, 148, 0.2), 
+                rgba(0, 166, 133, 0.3));
+            border: 1px solid #00b894;
+            color: #55efc4;
+        }
+        
+        /* مؤشر التحميل الكمي */
+        .quantum-loader {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .quantum-spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+        
+        .quantum-spinner::before,
+        .quantum-spinner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            animation: quantumSpin 2s linear infinite;
+        }
+        
+        .quantum-spinner::before {
+            border-top: 3px solid #00d4ff;
+            border-right: 3px solid #00d4ff;
+        }
+        
+        .quantum-spinner::after {
+            border-bottom: 3px solid gold;
+            border-left: 3px solid gold;
+            animation-delay: -1s;
+        }
+        
+        @keyframes quantumSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        /* التذييل الإمبراطوري */
+        .imperial-footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .footer-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 212, 255, 0.5), 
+                transparent);
             margin: 20px 0;
         }
         
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #00d4ff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            background: rgba(255, 56, 56, 0.2);
-            border: 1px solid #ff3838;
-            color: #ff6b6b;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            text-align: center;
-        }
-        
-        .success-message {
-            background: rgba(0, 184, 148, 0.2);
-            border: 1px solid #00b894;
-            color: #55efc4;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            text-align: center;
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .attempts-counter {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 56, 56, 0.3);
-        }
-        
+        /* التكيف مع الجوال */
         @media (max-width: 480px) {
-            .login-card {
-                padding: 30px 20px;
+            .gate-card {
+                padding: 40px 25px;
+                margin: 10px;
             }
             
-            .logo i {
-                font-size: 2.5rem;
+            .crown {
+                font-size: 60px;
             }
             
-            .logo-text h1 {
-                font-size: 1.7rem;
+            .empire-title {
+                font-size: 2rem;
+            }
+            
+            .power-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- تحذير الأمان -->
-    <div class="security-warning">
-        <i class="fas fa-shield-alt"></i> نظام آمن - أي محاولة اختراق ستسجل وتعالج قانونياً
+    <!-- النجوم المتحركة -->
+    <div class="stars" id="starsContainer"></div>
+    
+    <!-- الشارة الإمبراطورية -->
+    <div class="imperial-badge">
+        <i class="fas fa-crown"></i> EMPIRE EDITION
     </div>
     
-    <!-- عداد المحاولات -->
-    <div class="attempts-counter" id="attemptsCounter">
-        <i class="fas fa-lock"></i> محاولات الدخول المتبقية: <span id="remainingAttempts">5</span>
-    </div>
-    
-    <div class="login-container">
-        <div class="login-card">
+    <!-- البوابة الكونية -->
+    <div class="cosmic-gate">
+        <div class="gate-card">
             <!-- الرسائل -->
-            <div class="error-message" id="errorMessage"></div>
-            <div class="success-message" id="successMessage"></div>
+            <div class="imperial-message message-error" id="errorMessage"></div>
+            <div class="imperial-message message-success" id="successMessage"></div>
             
-            <!-- مؤشر التحميل -->
-            <div class="loading" id="loadingIndicator">
-                <div class="spinner"></div>
-                <p style="margin-top: 10px;">جاري التحقق من الأمان...</p>
+            <!-- مؤشر التحميل الكمي -->
+            <div class="quantum-loader" id="quantumLoader">
+                <div class="quantum-spinner"></div>
+                <p style="margin-top: 15px; color: #a5b4fc;">
+                    <i class="fas fa-atom"></i> جاري المعالجة الكمومية...
+                </p>
             </div>
             
-            <!-- الرأس -->
-            <div class="login-header">
-                <div class="logo">
-                    <i class="fas fa-robot"></i>
-                    <div class="logo-text">
-                        <h1>DeepSeek AI</h1>
-                        <p style="color: #aaa; font-size: 0.9rem;">نظام الذكاء الاصطناعي الآمن</p>
-                    </div>
-                </div>
-                <p style="color: #888; margin-top: 10px;">🔐 تسجيل الدخول الآمن</p>
+            <!-- التاج المتألق -->
+            <div class="crown-header">
+                <div class="crown">👑</div>
+                <h1 class="empire-title">DEEPSEEK EMPIRE</h1>
+                <p class="empire-subtitle">
+                    <i class="fas fa-star"></i> بوابة العرش الذكي
+                </p>
             </div>
             
-            <!-- نموذج تسجيل الدخول -->
-            <div class="login-form">
-                <div class="form-group">
-                    <label for="username"><i class="fas fa-user"></i> اسم المستخدم</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user-circle"></i>
+            <!-- مدخل النخبة -->
+            <div class="elite-entrance">
+                <div class="input-portal">
+                    <label class="portal-label">
+                        <i class="fas fa-user-astronaut"></i> معرف النخبة
+                    </label>
+                    <div style="position: relative;">
+                        <i class="fas fa-user-crown portal-icon"></i>
                         <input type="text" 
-                               id="username" 
-                               placeholder="أدخل اسم المستخدم"
+                               class="portal-input"
+                               id="eliteUsername"
+                               placeholder="أدخل معرف النخبة"
                                autocomplete="username"
                                required>
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="password"><i class="fas fa-key"></i> كلمة المرور</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
+                <div class="input-portal">
+                    <label class="portal-label">
+                        <i class="fas fa-key-skeleton"></i> شفرة العرش
+                    </label>
+                    <div style="position: relative;">
+                        <i class="fas fa-lock portal-icon"></i>
                         <input type="password" 
-                               id="password" 
-                               placeholder="أدخل كلمة المرور"
+                               class="portal-input"
+                               id="thronePassword"
+                               placeholder="أدخل شفرة العرش"
                                autocomplete="current-password"
                                required>
-                        <button type="button" class="show-password" onclick="togglePassword()">
-                            <i class="fas fa-eye"></i>
+                        <button type="button" 
+                                onclick="toggleThronePassword()"
+                                style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #a5b4fc; cursor: pointer; font-size: 1.1rem;">
+                            <i class="fas fa-eye" id="passwordEye"></i>
                         </button>
                     </div>
                 </div>
                 
-                <button class="login-btn" onclick="login()" id="loginButton">
-                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول الآمن
+                <button class="throne-button" onclick="enterThrone()" id="enterThroneBtn">
+                    <i class="fas fa-crown"></i> دخول العرش الإمبراطوري
                 </button>
             </div>
             
-            <!-- معلومات الأمان -->
-            <div class="security-features">
-                <h4><i class="fas fa-shield-alt"></i> ميزات الأمان المفعلة:</h4>
-                <ul class="features-list">
-                    <li><i class="fas fa-check-circle" style="color: #00b894;"></i> تشفير AES-256 لكلمات المرور</li>
-                    <li><i class="fas fa-check-circle" style="color: #00b894;"></i> تحديد عدد المحاولات (5 محاولات)</li>
-                    <li><i class="fas fa-check-circle" style="color: #00b894;"></i> تسجيل كافة محاولات الدخول</li>
-                    <li><i class="fas fa-check-circle" style="color: #00b894;"></i> حماية من هجمات القوة الغاشمة</li>
-                    <li><i class="fas fa-check-circle" style="color: #00b894;"></i> توكنات دخول منتهية الصلاحية</li>
-                </ul>
+            <!-- قوة النظام -->
+            <div class="system-power">
+                <h4 class="power-title">
+                    <i class="fas fa-bolt"></i> قوة النظام الحالية
+                </h4>
+                <div class="power-stats">
+                    <div class="stat">
+                        <div class="stat-value" id="aiPower">100%</div>
+                        <div class="stat-label">طاقة الذكاء</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="neuralCores">1.21M</div>
+                        <div class="stat-label">نواة عصبية</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">∞</div>
+                        <div class="stat-label">المعرفة</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Ω</div>
+                        <div class="stat-label">المستوى</div>
+                    </div>
+                </div>
             </div>
             
-            <!-- التذييل -->
-            <div class="login-footer">
-                <p><i class="fas fa-info-circle"></i> الإصدار 1.0.0 | مستوى الأمان: عسكري</p>
-                <p>© 2024 DeepSeek AI | جميع الحقوق محفوظة</p>
+            <!-- التذييل الإمبراطوري -->
+            <div class="imperial-footer">
+                <div class="footer-divider"></div>
+                <p>
+                    <i class="fas fa-shield-check"></i> 
+                    محمي بتشفير كمومي متقدم
+                </p>
+                <p style="margin-top: 10px; font-size: 0.8rem; color: #4b5563;">
+                    © 2024 DeepSeek Empire | إعادة تعريف الذكاء
+                </p>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // المتغيرات
-        let loginAttempts = 0;
-        const maxAttempts = 5;
-        let lockoutTime = null;
-        
-        // تحديث عداد المحاولات
-        function updateAttemptsCounter() {
-            const remaining = maxAttempts - loginAttempts;
-            document.getElementById('remainingAttempts').textContent = remaining;
+        // إنشاء النجوم
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const starCount = 150;
             
-            if (remaining <= 2) {
-                document.getElementById('attemptsCounter').style.borderColor = '#ff3838';
-                document.getElementById('attemptsCounter').style.background = 'rgba(255, 56, 56, 0.2)';
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // أحجام عشوائية
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // مواقع عشوائية
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // توقيت عشوائي للوميض
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                
+                container.appendChild(star);
             }
         }
         
         // تبديل عرض كلمة المرور
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const eyeIcon = event.currentTarget.querySelector('i');
+        function toggleThronePassword() {
+            const input = document.getElementById('thronePassword');
+            const eye = document.getElementById('passwordEye');
             
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.className = 'fas fa-eye-slash';
+            if (input.type === 'password') {
+                input.type = 'text';
+                eye.className = 'fas fa-eye-slash';
             } else {
-                passwordInput.type = 'password';
-                eyeIcon.className = 'fas fa-eye';
+                input.type = 'password';
+                eye.className = 'fas fa-eye';
             }
         }
         
-        // التحقق من حالة القفل
-        function checkLockout() {
-            if (lockoutTime) {
-                const now = new Date();
-                const lockoutEnd = new Date(lockoutTime);
-                
-                if (now < lockoutEnd) {
-                    const minutesLeft = Math.ceil((lockoutEnd - now) / (1000 * 60));
-                    showError(`الحساب مقفل مؤقتاً. حاول مرة أخرى بعد ${minutesLeft} دقيقة`);
-                    document.getElementById('loginButton').disabled = true;
-                    return true;
-                } else {
-                    lockoutTime = null;
-                    loginAttempts = 0;
-                    updateAttemptsCounter();
-                }
-            }
-            return false;
-        }
-        
-        // عرض رسالة خطأ
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
-            errorDiv.style.display = 'block';
+        // عرض رسالة إمبراطورية
+        function showImperialMessage(type, message) {
+            const messageDiv = document.getElementById(type + 'Message');
+            messageDiv.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                ${message}
+            `;
+            messageDiv.style.display = 'block';
             
-            // إخفاء بعد 5 ثواني
             setTimeout(() => {
-                errorDiv.style.display = 'none';
+                messageDiv.style.display = 'none';
             }, 5000);
         }
         
-        // عرض رسالة نجاح
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            successDiv.style.display = 'block';
+        // إظهار/إخفاء المحمل الكمي
+        function showQuantumLoader(show) {
+            document.getElementById('quantumLoader').style.display = show ? 'block' : 'none';
         }
         
-        // إظهار/إخفاء مؤشر التحميل
-        function showLoading(show) {
-            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
-        }
-        
-        // تسجيل الدخول
-        async function login() {
-            // التحقق من القفل
-            if (checkLockout()) {
-                return;
-            }
+        // دخول العرش الإمبراطوري
+        async function enterThrone() {
+            const username = document.getElementById('eliteUsername').value.trim();
+            const password = document.getElementById('thronePassword').value;
             
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            
-            // التحقق من الإدخال
             if (!username || !password) {
-                showError('يرجى ملء جميع الحقول');
+                showImperialMessage('error', '👑 العرش ينتظر معرف النخبة وشفرة الدخول');
                 return;
             }
             
-            // زيادة عداد المحاولات
-            loginAttempts++;
-            updateAttemptsCounter();
+            // إظهار المحمل الكمي
+            showQuantumLoader(true);
+            const btn = document.getElementById('enterThroneBtn');
+            btn.disabled = true;
             
-            // التحقق من تجاوز الحد
-            if (loginAttempts >= maxAttempts) {
-                lockoutTime = new Date(Date.now() + 30 * 60 * 1000); // قفل لمدة 30 دقيقة
-                showError('تم تجاوز عدد المحاولات المسموح. الحساب مقفل لمدة 30 دقيقة');
-                document.getElementById('loginButton').disabled = true;
-                
-                // تسجيل المحاولة المخالفة
-                logSecurityEvent('ACCOUNT_LOCKOUT', username, 'تجاوز عدد محاولات الدخول');
-                return;
-            }
-            
-            // إظهار مؤشر التحميل
-            showLoading(true);
-            document.getElementById('loginButton').disabled = true;
+            // التأثيرات البصرية
+            document.querySelector('.gate-card').style.animation = 'borderGlow 1s linear infinite';
             
             try {
-                // إرسال طلب تسجيل الدخول
-                const response = await fetch('/api/login', {
+                // إرسال طلب دخول النخبة
+                const response = await fetch('/throne/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         username: username,
                         password: password
@@ -498,110 +604,88 @@
                 
                 const data = await response.json();
                 
-                if (response.ok) {
-                    // تسجيل الدخول الناجح
-                    showSuccess('✅ تم تسجيل الدخول بنجاح');
+                if (response.ok && data.status === 'EMPIRE_ACTIVATED') {
+                    showImperialMessage('success', '👑 تحية للنخبة! تم تفعيل الإمبراطورية');
                     
-                    // تسجيل الحدث الأمني
-                    logSecurityEvent('LOGIN_SUCCESS', username, 'تسجيل دخول ناجح');
+                    // حفظ توكن العرش
+                    localStorage.setItem('empire_token', data.token);
+                    localStorage.setItem('elite_access', JSON.stringify(data));
                     
-                    // حفظ التوكن
-                    localStorage.setItem('auth_token', data.token);
-                    
-                    // إعادة تعيين المحاولات
-                    loginAttempts = 0;
-                    updateAttemptsCounter();
-                    
-                    // الانتقال للوحة التحكم المناسبة
+                    // الانتقال بعد تأخير درامي
                     setTimeout(() => {
-                        if (data.isAdmin) {
-                            window.location.href = 'admin-panel.html';
-                        } else {
-                            window.location.href = 'user-dashboard.html';
-                        }
-                    }, 1500);
+                        window.location.href = '/imperial-dashboard';
+                    }, 2000);
                     
                 } else {
-                    // فشل تسجيل الدخول
-                    showError(data.error || 'بيانات الدخول غير صحيحة');
-                    
-                    // تسجيل المحاولة الفاشلة
-                    logSecurityEvent('LOGIN_FAILED', username, data.error || 'كلمة مرور خاطئة');
+                    showImperialMessage('error', 
+                        data.message || '🚫 هذا العرش للنخبة فقط. تحقق من بيانات الدخول.'
+                    );
                 }
                 
             } catch (error) {
-                showError('خطأ في الاتصال بالخادم');
-                logSecurityEvent('LOGIN_ERROR', username, error.message);
+                showImperialMessage('error', '⚡ خطأ في بوابة الأبعاد. حاول مرة أخرى.');
                 
             } finally {
-                showLoading(false);
-                document.getElementById('loginButton').disabled = false;
+                showQuantumLoader(false);
+                btn.disabled = false;
+                document.querySelector('.gate-card').style.animation = '';
             }
         }
         
-        // تسجيل حدث أمني
-        function logSecurityEvent(action, username, details) {
-            const event = {
-                timestamp: new Date().toISOString(),
-                action: action,
-                username: username,
-                details: details,
-                ip: '127.0.0.1', // في الإنتاج: الحصول على IP حقيقي
-                userAgent: navigator.userAgent
-            };
+        // تحديث إحصائيات القوة الديناميكية
+        function updatePowerStats() {
+            const stats = [
+                { id: 'aiPower', base: 100, range: 5 },
+                { id: 'neuralCores', base: 1210000, range: 50000 }
+            ];
             
-            console.log('🔒 حدث أمني:', event);
-            
-            // في الواقع، سيرسل للخادم
-            fetch('/api/security/log', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(event)
-            }).catch(console.error);
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                const value = stat.base + (Math.random() * stat.range * 2 - stat.range);
+                
+                if (stat.id === 'aiPower') {
+                    element.textContent = `${Math.min(100, Math.max(95, value)).toFixed(1)}%`;
+                } else {
+                    element.textContent = (value / 1000).toFixed(1) + 'M';
+                }
+            });
         }
-        
-        // التحقق التلقائي من القفل
-        function autoCheckLockout() {
-            const savedLockout = localStorage.getItem('lockout_time');
-            if (savedLockout) {
-                lockoutTime = new Date(savedLockout);
-                checkLockout();
-            }
-        }
-        
-        // السماح بالضغط على Enter
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                login();
-            }
-        });
         
         // التهيئة عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', () => {
-            updateAttemptsCounter();
-            autoCheckLockout();
+            createStars();
             
-            // وضع التركيز على حقل اسم المستخدم
-            document.getElementById('username').focus();
+            // تحديث الإحصائيات كل 3 ثوان
+            setInterval(updatePowerStats, 3000);
             
-            // التحقق من وجود توكن مسبقاً
-            const existingToken = localStorage.getItem('auth_token');
+            // التركيز على حقل الدخول
+            document.getElementById('eliteUsername').focus();
+            
+            // السماح بالدخول بالزر Enter
+            document.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') enterThrone();
+            });
+            
+            // التحقق من وجود وصول سابق
+            const existingToken = localStorage.getItem('empire_token');
             if (existingToken) {
-                // التحقق من صلاحية التوكن
-                checkTokenValidity(existingToken);
+                // الانتقال المباشر لمن لديه وصول سابق
+                setTimeout(() => {
+                    window.location.href = '/imperial-dashboard';
+                }, 1000);
             }
         });
         
-        // التحقق من صلاحية التوكن
-        async function checkTokenValidity(token) {
-            try {
-                // هنا يمكن إضافة API للتحقق من التوكن
-                // مؤقتاً، الانتقال المباشر
-                window.location.href = 'admin-panel.html';
-            } catch (error) {
-                localStorage.removeItem('auth_token');
-            }
-        }
+        // تأثيرات إضافية عند التركيز
+        document.querySelectorAll('.portal-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
     </script>
 </body>
 </html>

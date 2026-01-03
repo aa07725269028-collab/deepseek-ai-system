@@ -13,6 +13,7 @@
     "npm": ">=9.0.0"
   },
   "scripts": {
+        "start": "node server.js",
     "start": "node --max-old-space-size=4096 server.js",
     "empire": "node --max-old-space-size=8192 --experimental-vm-modules server.js",
     "dev": "nodemon --exec 'node --max-old-space-size=2048' server.js",

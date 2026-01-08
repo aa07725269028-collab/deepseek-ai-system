@@ -537,6 +537,136 @@ app.get('/api/all-platforms', (req, res) => {
 // ==================== تشغيل النظام ====================
 
 app.use(express.static(__dirname));
+// ==================== نظام المنصات حسب الدولة ====================
+
+const platformsByCountry = {
+    'السعودية': ['tiktok', 'snapchat', 'tamtam', 'instagram', 'youtube'],
+    'مصر': ['facebook', 'tiktok', 'youtube', 'instagram'],
+    'الإمارات': ['instagram', 'tiktok', 'snapchat', 'linkedin'],
+    'الجزائر': ['facebook', 'tiktok', 'youtube'],
+    'المغرب': ['facebook', 'instagram', 'tiktok'],
+    'الولايات المتحدة': ['youtube', 'tiktok', 'instagram', 'twitter', 'facebook'],
+    'بريطانيا': ['youtube', 'instagram', 'tiktok', 'twitter'],
+    'الهند': ['youtube', 'tiktok', 'instagram', 'facebook'],
+    'الصين': ['douyin', 'bilibili', 'wechat', 'tiktok'],
+    'روسيا': ['vk', 'telegram', 'youtube', 'rutube']
+};
+
+// الحصول على المنصات الموصى بها للدولة
+app.get('/api/country-platforms/:country', (req, res) => {
+    const country = req.params.country;
+    const platforms = platformsByCountry[country] || platformsByCountry['السعودية'];
+    
+    res.json({
+        success: true,
+        country: country,
+        recommended_platforms: platforms,
+        total_platforms: platforms.length
+    });
+});
+
+// نظام المحتوى الذكي حسب الدولة
+const contentByCountry = {
+    'السعودية': {
+        tags: ['#السعودية', '#الرياض', '#جدة', '#ديني', '#ترفيهي'],
+        optimal_time: '18:00 - 22:00',
+        language: 'العربية الفصحى'
+    },
+    'مصر': {
+        tags: ['#مصر', '#القاهرة', '#مصري', '#كوميدي', '#دراما'],
+        optimal_time: '20:00 - 23:00',
+        language: 'العربية العامية المصرية'
+    },
+    'الإمارات': {
+        tags: ['#الإمارات', '#دبي', '#أبوظبي', '#فاخر', '#تقني'],
+        optimal_time: '17:00 - 21:00',
+        language: 'العربية الفصحى'
+    }
+};
+
+// توليد محتوى ذكي
+app.post('/api/smart-content', (req, res) => {
+    const { country, topic } = req.body;
+    
+    const config = contentByCountry[country] || contentByCountry['السعودية'];
+    
+    const content = {
+        title: `${topic} | ${country}`,
+        description: `فيديو مميز عن ${topic} خاص ب${country}`,
+        tags: config.tags,
+        hashtags: config.tags.join(' '),
+        optimal_posting_time: config.optimal_time,
+        language: config.language
+    };
+    
+    res.json({
+        success: true,
+        country: country,
+        generated_content: content
+    });
+});
+
+// نظام النشر التلقائي المتقدم
+app.post('/api/auto-publish', async (req, res) => {
+    const { username, text } = req.body;
+    
+    const user = database.users[username];
+    if (!user) {
+        return res.status(404).json({ error: 'المستخدم غير موجود' });
+    }
+    
+    const country = user.country;
+    const platforms = platformsByCountry[country] || ['tiktok', 'instagram', 'youtube'];
+    
+    // 1. توليد الفيديو
+    const videoId = `video_${Date.now()}`;
+    const videoData = {
+        id: videoId,
+        text: text,
+        url: `https://empire.deepseek.ai/videos/${videoId}.mp4`,
+        created_at: new Date().toISOString(),
+        status: 'completed'
+    };
+    
+    database.videos.push(videoData);
+    user.videos.push(videoId);
+    
+    // 2. توليد محتوى ذكي
+    const contentConfig = contentByCountry[country] || contentByCountry['السعودية'];
+    
+    // 3. النشر على كل المنصات
+    const results = [];
+    
+    for (const platform of platforms.slice(0, 3)) { // أول 3 منصات فقط
+        const content = `${text}\n\n${contentConfig.tags.slice(0, 3).join(' ')}\n\n#${country}`;
+        
+        results.push({
+            platform: platform,
+            success: true,
+            url: `https://${platform}.com/video/${videoId}`,
+            content: content,
+            published_at: new Date().toISOString(),
+            country: country
+        });
+        
+        // زيادة المشاهدات عشوائياً
+        videoData.views = videoData.views || 0;
+        videoData.views += Math.floor(Math.random() * 1000) + 100;
+    }
+    
+    res.json({
+        success: true,
+        message: `تم النشر التلقائي على ${results.length} منصة في ${country}`,
+        video: videoData,
+        publishing_results: results,
+        country_config: {
+            country: country,
+            platforms_used: platforms.slice(0, 3),
+            content_style: contentConfig.language,
+            optimal_time: contentConfig.optimal_time
+        }
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`

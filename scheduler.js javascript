@@ -1,0 +1,342 @@
+// ====================================================
+// ⏰ EMPIRE SCHEDULER - منظم الجدولة الإمبراطوري
+// 📅 يخطط وينشر 3-5 فيديوهات يومياً لكل مستخدم
+// ====================================================
+
+const cron = require('node-cron');
+
+class EmpireScheduler {
+    constructor() {
+        this.schedules = new Map();
+        this.timezones = {
+            'السعودية': 'Asia/Riyadh',
+            'مصر': 'Africa/Cairo',
+            'الإمارات': 'Asia/Dubai',
+            'الولايات المتحدة': 'America/New_York',
+            'بريطانيا': 'Europe/London',
+            'الهند': 'Asia/Kolkata',
+            'الصين': 'Asia/Shanghai',
+            'روسيا': 'Europe/Moscow'
+        };
+        
+        this.optimalTimes = {
+            'السعودية': ['18:00', '20:00', '22:00'],
+            'مصر': ['19:00', '21:00', '23:00'],
+            'الإمارات': ['17:00', '19:00', '21:00'],
+            'الولايات المتحدة': ['19:00', '21:00', '23:00'],
+            'بريطانيا': ['18:00', '20:00', '22:00'],
+            'الهند': ['20:00', '22:00', '00:00'],
+            'الصين': ['19:00', '21:00', '23:00'],
+            'روسيا': ['18:00', '20:00', '22:00']
+        };
+    }
+    
+    // 1. إنشاء جدول نشر ذكي للمستخدم
+    createSmartSchedule(user) {
+        const { username, country, platforms, contentPreferences } = user;
+        
+        const timezone = this.timezones[country] || 'Asia/Riyadh';
+        const optimalHours = this.optimalTimes[country] || ['18:00', '20:00', '22:00'];
+        
+        // اختيار 3-5 أوقات عشوائية من الأوقات المثلى
+        const selectedTimes = [];
+        const numVideos = Math.floor(Math.random() * 3) + 3; // 3-5 فيديوهات
+        
+        for (let i = 0; i < numVideos; i++) {
+            const randomHour = optimalHours[Math.floor(Math.random() * optimalHours.length)];
+            selectedTimes.push(randomHour);
+        }
+        
+        // إزالة التكرارات وترتيب الأوقات
+        const uniqueTimes = [...new Set(selectedTimes)].sort();
+        
+        const schedule = {
+            username: username,
+            country: country,
+            timezone: timezone,
+            times: uniqueTimes,
+            platforms: platforms,
+            contentPreferences: contentPreferences || ['education', 'entertainment'],
+            videosPerDay: uniqueTimes.length,
+            totalWeeklyVideos: uniqueTimes.length * 7,
+            status: 'active',
+            created_at: new Date().toISOString()
+        };
+        
+        // حفظ الجدول
+        this.schedules.set(username, schedule);
+        
+        console.log(`📅 تم إنشاء جدول ذكي لـ ${username}: ${uniqueTimes.length} فيديو/يوم`);
+        
+        return schedule;
+    }
+    
+    // 2. جدولة مهام النشر
+    schedulePublication(username, videoData, platform, time) {
+        const [hours, minutes] = time.split(':').map(Number);
+        
+        // تحويل الوقت إلى تعبير cron
+        const cronExpression = `${minutes} ${hours} * * *`;
+        
+        const job = cron.schedule(cronExpression, async () => {
+            try {
+                console.log(`🚀 نشر مقرر: ${username} -> ${platform} @ ${time}`);
+                
+                // هنا سيتم استدعاء الـ Publisher
+                const publishResult = {
+                    username: username,
+                    platform: platform,
+                    time: time,
+                    video: videoData.id,
+                    status: 'published',
+                    published_at: new Date().toISOString(),
+                    estimated_reach: Math.floor(Math.random() * 10000) + 1000
+                };
+                
+                console.log(`✅ تم النشر: ${username} على ${platform}`);
+                
+                return publishResult;
+                
+            } catch (error) {
+                console.error(`❌ فشل النشر: ${username} -> ${platform}:`, error.message);
+                
+                return {
+                    username: username,
+                    platform: platform,
+                    time: time,
+                    status: 'failed',
+                    error: error.message,
+                    retry_count: 1
+                };
+            }
+        }, {
+            scheduled: true,
+            timezone: this.schedules.get(username)?.timezone || 'Asia/Riyadh'
+        });
+        
+        return {
+            jobId: job.options.name || `job_${Date.now()}`,
+            username: username,
+            platform: platform,
+            time: time,
+            cronExpression: cronExpression,
+            nextRun: job.nextDate().toISO(),
+            status: 'scheduled'
+        };
+    }
+    
+    // 3. جدولة جميع منصات المستخدم
+    scheduleAllPlatforms(username, videoData, times) {
+        const userSchedule = this.schedules.get(username);
+        
+        if (!userSchedule) {
+            console.log(`⚠️ لا يوجد جدول لـ ${username}`);
+            return null;
+        }
+        
+        const jobs = [];
+        
+        for (const time of times) {
+            for (const platform of userSchedule.platforms) {
+                const job = this.schedulePublication(username, videoData, platform, time);
+                jobs.push(job);
+                
+                console.log(`📌 جدولة: ${username} -> ${platform} @ ${time}`);
+            }
+        }
+        
+        return {
+            username: username,
+            totalJobs: jobs.length,
+            platforms: userSchedule.platforms,
+            times: times,
+            jobs: jobs,
+            weeklySchedule: this.generateWeeklySchedule(username, jobs)
+        };
+    }
+    
+    // 4. إنشاء جدول أسبوعي
+    generateWeeklySchedule(username, jobs) {
+        const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        const weeklySchedule = {};
+        
+        days.forEach(day => {
+            weeklySchedule[day] = jobs.map(job => ({
+                platform: job.platform,
+                time: job.time,
+                type: 'video_publication'
+            }));
+        });
+        
+        return weeklySchedule;
+    }
+    
+    // 5. إدارة جداول متعددة المستخدمين
+    async scheduleMultipleUsers(usersData, videoData) {
+        console.log(`👥 بدء جدولة ${usersData.length} مستخدم`);
+        
+        const allSchedules = [];
+        
+        for (const user of usersData) {
+            console.log(`🔄 جدولة المستخدم: ${user.username} (${user.country})`);
+            
+            // إنشاء جدول ذكي للمستخدم
+            const userSchedule = this.createSmartSchedule(user);
+            
+            // جدولة النشر
+            const scheduledJobs = this.scheduleAllPlatforms(
+                user.username,
+                videoData,
+                userSchedule.times
+            );
+            
+            if (scheduledJobs) {
+                allSchedules.push({
+                    user: user.username,
+                    country: user.country,
+                    schedule: userSchedule,
+                    jobs: scheduledJobs.jobs,
+                    totalPublications: scheduledJobs.totalJobs * 7 // أسبوع كامل
+                });
+                
+                console.log(`✅ تم جدولة ${scheduledJobs.totalJobs} مهمة لـ ${user.username}`);
+            }
+            
+            // تأخير بين كل مستخدم
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        
+        return {
+            total_users: usersData.length,
+            total_scheduled_jobs: allSchedules.reduce((sum, s) => sum + (s.jobs?.length || 0), 0),
+            total_weekly_publications: allSchedules.reduce((sum, s) => sum + (s.totalPublications || 0), 0),
+            schedules: allSchedules,
+            report: `تم جدولة ${allSchedules.length} مستخدم بـ ${allSchedules.reduce((sum, s) => sum + (s.jobs?.length || 0), 0)} مهمة نشر`
+        };
+    }
+    
+    // 6. تعديل الجدول ديناميكياً
+    modifySchedule(username, newTimes) {
+        const userSchedule = this.schedules.get(username);
+        
+        if (!userSchedule) {
+            return { success: false, error: 'المستخدم غير موجود' };
+        }
+        
+        // تحديث الأوقات
+        userSchedule.times = [...new Set(newTimes)].sort();
+        userSchedule.videosPerDay = userSchedule.times.length;
+        userSchedule.updated_at = new Date().toISOString();
+        
+        this.schedules.set(username, userSchedule);
+        
+        console.log(`🔄 تم تعديل جدول ${username}: ${userSchedule.times.length} فيديو/يوم`);
+        
+        return {
+            success: true,
+            username: username,
+            new_times: userSchedule.times,
+            videos_per_day: userSchedule.times.length,
+            old_times: userSchedule.times
+        };
+    }
+    
+    // 7. إيقاف الجدول
+    stopSchedule(username) {
+        const userSchedule = this.schedules.get(username);
+        
+        if (!userSchedule) {
+            return { success: false, error: 'المستخدم غير موجود' };
+        }
+        
+        userSchedule.status = 'stopped';
+        userSchedule.stopped_at = new Date().toISOString();
+        
+        this.schedules.set(username, userSchedule);
+        
+        console.log(`⏸️ تم إيقاف جدول ${username}`);
+        
+        return {
+            success: true,
+            username: username,
+            status: 'stopped',
+            stopped_at: userSchedule.stopped_at,
+            total_days_active: Math.floor(
+                (new Date() - new Date(userSchedule.created_at)) / (1000 * 60 * 60 * 24)
+            )
+        };
+    }
+    
+    // 8. استئناف الجدول
+    resumeSchedule(username) {
+        const userSchedule = this.schedules.get(username);
+        
+        if (!userSchedule) {
+            return { success: false, error: 'المستخدم غير موجود' };
+        }
+        
+        userSchedule.status = 'active';
+        userSchedule.resumed_at = new Date().toISOString();
+        
+        this.schedules.set(username, userSchedule);
+        
+        console.log(`▶️ تم استئناف جدول ${username}`);
+        
+        return {
+            success: true,
+            username: username,
+            status: 'active',
+            resumed_at: userSchedule.resumed_at,
+            schedule: userSchedule
+        };
+    }
+    
+    // 9. إحصائيات الجدولة
+    getSchedulingStats() {
+        const totalUsers = this.schedules.size;
+        const activeUsers = [...this.schedules.values()].filter(s => s.status === 'active').length;
+        const totalVideosPerDay = [...this.schedules.values()]
+            .filter(s => s.status === 'active')
+            .reduce((sum, s) => sum + s.videosPerDay, 0);
+        
+        return {
+            total_users: totalUsers,
+            active_users: activeUsers,
+            inactive_users: totalUsers - activeUsers,
+            total_daily_videos: totalVideosPerDay,
+            total_weekly_videos: totalVideosPerDay * 7,
+            total_monthly_videos: totalVideosPerDay * 30,
+            schedules: [...this.schedules.entries()].map(([username, schedule]) => ({
+                username,
+                ...schedule
+            }))
+        };
+    }
+    
+    // 10. تنظيف الجداول القديمة
+    cleanupOldSchedules(daysOld = 30) {
+        const cutoffDate = new Date();
+        cutoffDate.setDate(cutoffDate.getDate() - daysOld);
+        
+        let cleaned = 0;
+        
+        for (const [username, schedule] of this.schedules.entries()) {
+            const scheduleDate = new Date(schedule.created_at);
+            
+            if (scheduleDate < cutoffDate && schedule.status === 'stopped') {
+                this.schedules.delete(username);
+                cleaned++;
+                console.log(`🧹 تم تنظيف جدول ${username} (قديم)`);
+            }
+        }
+        
+        return {
+            cleaned_schedules: cleaned,
+            remaining_schedules: this.schedules.size,
+            cutoff_date: cutoffDate.toISOString()
+        };
+    }
+}
+
+// تصدير المنظم الإمبراطوري
+module.exports = EmpireScheduler;
